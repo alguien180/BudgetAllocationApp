@@ -29,7 +29,7 @@ public class BudgetAllocatorApp {
                 }
                 if (entry == 1) {
                     System.out.println("enter object name");
-                    String name = sc1.next();
+                    String name = sc1.next().toLowerCase();
 
                     System.out.println("enter object cost");
                     double cost = sc1.nextDouble();
@@ -43,17 +43,38 @@ public class BudgetAllocatorApp {
                     entry = sc1.nextInt();
 
                 } else if (entry == 2) {
-                    System.out.println(ExpenseListMixed + "\n please write the name and amount of the balance the value will be subtracted (separated by a space ");
-
+                    System.out.println(ExpenseListMixed + "\n please write the name of the expense which will have its budget REDUCED ");
+                    String nameOfReducedBudget =sc1.nextLine().toLowerCase();
+                    if (ExpenseListMixed.get(nameOfReducedBudget).equals(null)) {
+                        System.out.println(ExpenseListMixed + "\n Invalid input, please write the name of the expense which will have its budget REDUCED ");
+                        nameOfReducedBudget =sc1.nextLine().toLowerCase();
+                    }
+                    System.out.println(ExpenseListMixed + "\n please write the name of the expense which will have its budget INCREASED ");
+                    String nameOfIncreasedBudget =sc1.nextLine().toLowerCase();
+                    if (ExpenseListMixed.get(nameOfIncreasedBudget).equals(null)) {
+                        System.out.println(ExpenseListMixed + "\n Invalid input, please write the name of the expense which will have its budget INCREASED ");
+                        nameOfIncreasedBudget =sc1.nextLine().toLowerCase();
+                    }
+                    System.out.println(ExpenseListMixed + "\n please write the amount of the expense which will have its budget INCREASED ");
+                    double budgetRelocated = sc1.nextDouble();
+                    if(ExpenseListMixed.get(nameOfReducedBudget)-budgetRelocated<0){
+                        System.out.println("amount is greater than the amount currently allocated to that expense, please re-check your input");
+                        budgetRelocated = sc1.nextDouble();
+                    }
+                    ExpenseListMixed.replace(nameOfReducedBudget,ExpenseListMixed.get(nameOfReducedBudget)-budgetRelocated);
+                    ExpenseListMixed.replace(nameOfIncreasedBudget,ExpenseListMixed.get(nameOfIncreasedBudget)+budgetRelocated);
+                    System.out.println(ExpenseListMixed + "\n is the updated budget ");
                     System.out.println("\n\nWhat would you like to do?\n 1. Input a new expense \n 2. Re-allocate budget to another section \n 3. See the current budget allocation \n 4. re-set total budget \n 5. exit programm");
                     entry = sc1.nextInt();
 
                 } else if (entry == 3) {
-                    System.out.println(ExpenseListMixed+percentageCalculator(ExpenseListMixed, ));
+                    percentageCalculator(ExpenseListMixed, ExpenseListpercentages);
+                    System.out.println(ExpenseListMixed+" "+ExpenseListpercentages);
                     System.out.println("\n\nWhat would you like to do?\n 1. Input a new expense \n 2. Re-allocate budget to another section \n 3. See the current budget allocation \n 4. re-set total budget \n 5. exit programm");
                     entry = sc1.nextInt();
 
                 } else if (entry == 4) {
+                    System.out.println("Please enter the new expense budget");
                     double moneyAllocated = 0;
                     for (Double val : ExpenseListMixed.values()) {
                         moneyAllocated += val;
@@ -70,19 +91,23 @@ public class BudgetAllocatorApp {
         }
         finally{sc1.close();}
     }
-    public double percentageCalculator(Map Expenses, Map percentagesToBeCalculated){
+    public static void percentageCalculator(Map Expenses, Map percentagesToBeCalculated){
         double total=0;
-        double percantage=0;
+        double percentage=0;
         /*for (Object val : Expenses.entrySet()) {
             total += (double) val;
             if(percentagesToBeCalculated.containsKey(Expenses.keySet()))
             percentagesToBeCalculated.put(Expenses)
         }*/
-        for(Map.Entry<String,Double> entry: Expenses.entrySet()){
-
+        for(Object entry: Expenses.entrySet()){
+            double moneyAllocated = 0;
+            for (Object val : Expenses.values()) {
+                moneyAllocated += (double) val;
+            }
+            if(percentagesToBeCalculated.containsKey(entry)){
+                percentagesToBeCalculated.put(entry,((double)percentagesToBeCalculated.get(entry)/moneyAllocated));
+            }
         }
-        percantage=(double)x.get(elemnentName)/total;
-        return percantage;
     }
 
     /* 1. create the % representation
