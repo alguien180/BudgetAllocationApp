@@ -1,7 +1,4 @@
-import java.math.BigDecimal;
 import java.util.*;
-
-import static java.lang.Double.isNaN;
 
 public class BudgetAllocatorApp {
 
@@ -48,56 +45,15 @@ public class BudgetAllocatorApp {
                     System.out.println("\n\nWhat would you like to do?\n 1. Input a new expense \n 2. increase or reduce amount of an expense \n 3. Re-allocate budget to another section \n 4. See the current budget allocation \n 5. re-set total budget \n 6. exit programm");
                     entry = sc1.nextInt();
                 } else if (entry == 2) {
-                    System.out.println(ExpenseListMixed + "\n Which expense which will have its budget modified ");
-                    String nameOfExpense = sc1.skip("\n").nextLine().toLowerCase();
-                    /*if (ExpenseListMixed.get(nameOfReducedBudget).equals(null)) {
-                        System.out.println(ExpenseListMixed + "\n Invalid input, please write the name of the expense which will have its budget REDUCED ");
-                        nameOfReducedBudget =sc1.nextLine().toLowerCase();
-                    }*/
-                    System.out.println(ExpenseListMixed + "\n please write the amount of money that will be increased or substracted (use negative numbers for the latter) ");
-                    double budgetChange = sc1.nextDouble();
 
-                    System.out.println(ExpenseListMixed + "\n \n please write the name of the expense which will have its budget INCREASED ");
-                    String nameOfIncreasedBudget = sc1.skip("\n").nextLine().toLowerCase();
-                    /*if (ExpenseListMixed.get(nameOfIncreasedBudget).equals(null)) {
-                        System.out.println(ExpenseListMixed + "\n Invalid input, please write the name of the expense which will have its budget modified ");
-                        nameOfIncreasedBudget =sc1.nextLine().toLowerCase();
-                    }*/
-
-                    if (ExpenseListMixed.get(nameOfExpense) + budgetChange < 0) {
-                        System.out.println("amount is greater than the amount currently allocated to that expense, please re-check your input");
-                        budgetChange = sc1.skip("\n").nextDouble();
-                    }
-                    System.out.println(ExpenseListMixed + "\n is the updated budget ");
+                    changeBudget(ExpenseListMixed);
                     System.out.println("\n\nWhat would you like to do?\n 1. Input a new expense \n 2. increase or reduce amount of an expense \n 3. Re-allocate budget to another section \n 4. See the current budget allocation \n 5. re-set total budget \n 6. exit programm");
                     entry = sc1.nextInt();
 
 
                 } else if (entry == 3) {
-                    //allows relocation of budget from one variable to another STILL INCOMPLETE (includes data validation, which is the failing part since if a transaction to a null is done, the value will be lost)
-                    System.out.println(ExpenseListMixed + "\n please write the name of the expense which will have its budget REDUCED ");
-                    String nameOfReducedBudget = sc1.skip("\n").nextLine().toLowerCase();
-                    /*if (ExpenseListMixed.get(nameOfReducedBudget).equals(null)) {
-                        System.out.println(ExpenseListMixed + "\n Invalid input, please write the name of the expense which will have its budget REDUCED ");
-                        nameOfReducedBudget =sc1.nextLine().toLowerCase();
-                    }*/
-                    System.out.println(ExpenseListMixed + "\n please write the amount of money that will be relocated ");
-                    double budgetRelocated = sc1.nextDouble();
 
-                    System.out.println(ExpenseListMixed + "\n \n please write the name of the expense which will have its budget INCREASED ");
-                    String nameOfIncreasedBudget = sc1.skip("\n").nextLine().toLowerCase();
-                    /*if (ExpenseListMixed.get(nameOfIncreasedBudget).equals(null)) {
-                        System.out.println(ExpenseListMixed + "\n Invalid input, please write the name of the expense which will have its budget INCREASED ");
-                        nameOfIncreasedBudget =sc1.nextLine().toLowerCase();
-                    }*/
-
-                    if (ExpenseListMixed.get(nameOfReducedBudget) - budgetRelocated < 0) {
-                        System.out.println("amount is greater than the amount currently allocated to that expense, please re-check your input");
-                        budgetRelocated = sc1.skip("\n").nextDouble();
-                    }
-                    ExpenseListMixed.replace(nameOfReducedBudget, ExpenseListMixed.get(nameOfReducedBudget) - budgetRelocated);
-                    ExpenseListMixed.replace(nameOfIncreasedBudget, ExpenseListMixed.get(nameOfIncreasedBudget) + budgetRelocated);
-                    System.out.println(ExpenseListMixed + "\n is the updated budget ");
+                    reallocateBudget(ExpenseListMixed);
                     System.out.println("\n\nWhat would you like to do?\n 1. Input a new expense \n 2. increase or reduce amount of an expense \n 3. Re-allocate budget to another section \n 4. See the current budget allocation \n 5. re-set total budget \n 6. exit programm");
                     entry = sc1.nextInt();
 
@@ -110,18 +66,10 @@ public class BudgetAllocatorApp {
 
                 } else if (entry == 5) {
                     //Allows to change the total budget
-                    System.out.println("Please enter the new expense budget");
-                    double moneyAllocated = 0;
-                    for (Double val : ExpenseListMixed.values()) {
-                        moneyAllocated += val;
-                    }
-                    totalMoney = sc1.nextDouble();
-                    if (totalMoney < moneyAllocated) {
-                        System.out.println("\n WARNING: New budget is less than the currently allocated budget. Cut expenses or input a new value\n");
-                    }
-                    System.out.println("Changed" + ExpenseListMixed + "," + (totalMoney - moneyAllocated) + " remaining from your total budget");
+                    totalBudgetChange(ExpenseListMixed);
                     System.out.println("\n\nWhat would you like to do?\n 1. Input a new expense \n 2. increase or reduce amount of an expense \n 3. Re-allocate budget to another section \n 4. See the current budget allocation \n 5. re-set total budget \n 6. exit programm");
                     entry = sc1.nextInt();
+
                 } else if (entry == 6) {
                     break;
                 }
@@ -132,6 +80,71 @@ public class BudgetAllocatorApp {
             sc1.close();
         }
     }
+
+    public static void changeBudget(Map<String,Double> budgets){
+        Scanner sc3 = new Scanner(System.in);
+        System.out.println(budgets + "\n Which expense which will have its budget modified ");
+        String nameOfExpense = sc3.nextLine();
+                    /*if (ExpenseListMixed.get(nameOfReducedBudget).equals(null)) {
+                        System.out.println(ExpenseListMixed + "\n Invalid input, please write the name of the expense which will have its budget REDUCED ");
+                        nameOfReducedBudget =sc1.nextLine().toLowerCase();
+                    }*/
+        System.out.println(budgets + "\n please write the amount of money that will be increased or substracted (use negative numbers for the latter) ");
+        double budgetChange = sc3.nextDouble();
+
+
+       /* if (budgets.get(nameOfExpense) + budgetChange < 0) {
+            System.out.println("amount is greater than the amount currently allocated to that expense, please re-check your input");
+            budgetChange = sc3.skip("\n").nextDouble();
+        }*/
+        budgets.put(nameOfExpense,budgets.get(nameOfExpense)+budgetChange);
+        System.out.println(budgets + "\n is the updated budget ");
+    }
+
+    public static void reallocateBudget(Map<String,Double> budgets){
+        Scanner sc3 = new Scanner(System.in);
+        System.out.println(budgets + "\n Which expense which will have its budget modified ");
+        String nameOfExpense = sc3.nextLine().toLowerCase();
+                    /*if (ExpenseListMixed.get(nameOfReducedBudget).equals(null)) {
+                        System.out.println(ExpenseListMixed + "\n Invalid input, please write the name of the expense which will have its budget REDUCED ");
+                        nameOfReducedBudget =sc1.nextLine().toLowerCase();
+                    }*/
+        System.out.println(budgets + "\n please write the amount of money that will be increased or substracted (use negative numbers for the latter) ");
+        double budgetChange = sc3.nextDouble();
+
+        System.out.println(budgets + "\n \n please write the name of the expense which will have its budget INCREASED ");
+        String nameOfIncreasedBudget = sc3.skip("\n").nextLine().toLowerCase();
+                    /*if (ExpenseListMixed.get(nameOfIncreasedBudget).equals(null)) {
+                        System.out.println(ExpenseListMixed + "\n Invalid input, please write the name of the expense which will have its budget modified ");
+                        nameOfIncreasedBudget =sc1.nextLine().toLowerCase();}*/
+
+        if (budgets.get(nameOfExpense) + budgetChange < 0) {
+            System.out.println("amount is greater than the amount currently allocated to that expense, please re-check your input");
+            budgetChange = sc3.skip("\n").nextDouble();
+        }
+        budgets.get(nameOfExpense).equals(budgets.get(nameOfExpense)-budgetChange);
+        budgets.get(nameOfIncreasedBudget).equals(budgets.get(nameOfIncreasedBudget)+budgetChange);
+        System.out.println(budgets + "\n is the updated budget ");
+    }
+public static double totalBudgetChange(Map<String, Double> budgets){
+    System.out.println("Please enter the new expense budget");
+    double totalMoney=0;
+    Scanner sc2 = new Scanner(System.in);
+    double moneyAllocated = 0;
+    for (Double val : budgets.values()) {
+        moneyAllocated += val;
+    }
+    totalMoney = sc2.nextDouble();
+    if (totalMoney<0){
+        System.out.println("Invalid amount, please enter a positive number");
+        totalMoney = sc2.nextDouble();
+    }
+    if (totalMoney < moneyAllocated) {
+        System.out.println("\n WARNING: New budget is less than the currently allocated budget. Cut expenses or input a new value\n");
+    }
+    System.out.println("Changed" + budgets + "," + (totalMoney - moneyAllocated) + " remaining from your total budget");
+    return totalMoney;
+}
 
     public static void percentageCalculator(Map<String, Double> expenses) {
         double total = 0;
@@ -147,7 +160,7 @@ public class BudgetAllocatorApp {
             percentageMap.put(entry.getKey(), temporaryArrayList);
         }
         for (Map.Entry<String, ArrayList<Double>> printing : percentageMap.entrySet()) {
-            System.out.println("Key = " + printing.getKey() +
+            System.out.println("Expense name = " + printing.getKey() +
                     ", Value = " + String.format("%.2f",printing.getValue().get(0))+" % "+
                     printing.getValue().get(1)+" euros");
         }
@@ -157,13 +170,10 @@ public class BudgetAllocatorApp {
         for (Map.Entry<String, Double> input : expenseMap.entrySet())
             System.out.println("Object = " + input.getKey() +
                     ", Expense = " + input.getValue());
-
-
     }
-    /* 1. create the % representation
+/*
      * 2 create a currency input property (hasmap won't cut it I think)
      * 2.1 create a connection to a curencty converter
      * + en funciones y comentar el codigo
-     * mete varias verisones a github*/
-
+    // add big decimal*/
 }
