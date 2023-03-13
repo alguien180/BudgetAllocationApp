@@ -50,7 +50,6 @@ public class BudgetAllocatorApp {
                     System.out.println("\n\nWhat would you like to do?\n 1. Input a new expense \n 2. increase or reduce amount of an expense \n 3. Re-allocate budget to another section \n 4. See the current budget allocation \n 5. re-set total budget \n 6. exit programm");
                     entry = sc1.nextInt();
 
-
                 } else if (entry == 3) {
 
                     reallocateBudget(ExpenseListMixed);
@@ -104,16 +103,16 @@ public class BudgetAllocatorApp {
     public static void reallocateBudget(Map<String,Double> budgets){
         Scanner sc3 = new Scanner(System.in);
         System.out.println(budgets + "\n Which expense which will have its budget modified ");
-        String nameOfExpense = sc3.nextLine().toLowerCase();
+        String nameOfExpense = sc3.nextLine();
                     /*if (ExpenseListMixed.get(nameOfReducedBudget).equals(null)) {
                         System.out.println(ExpenseListMixed + "\n Invalid input, please write the name of the expense which will have its budget REDUCED ");
                         nameOfReducedBudget =sc1.nextLine().toLowerCase();
                     }*/
-        System.out.println(budgets + "\n please write the amount of money that will be increased or substracted (use negative numbers for the latter) ");
+        System.out.println(budgets + "\n please write the amount of money that will be substracted from the account ");
         double budgetChange = sc3.nextDouble();
 
         System.out.println(budgets + "\n \n please write the name of the expense which will have its budget INCREASED ");
-        String nameOfIncreasedBudget = sc3.skip("\n").nextLine().toLowerCase();
+        String nameOfIncreasedBudget = sc3.skip("\n").nextLine();
                     /*if (ExpenseListMixed.get(nameOfIncreasedBudget).equals(null)) {
                         System.out.println(ExpenseListMixed + "\n Invalid input, please write the name of the expense which will have its budget modified ");
                         nameOfIncreasedBudget =sc1.nextLine().toLowerCase();}*/
@@ -122,8 +121,8 @@ public class BudgetAllocatorApp {
             System.out.println("amount is greater than the amount currently allocated to that expense, please re-check your input");
             budgetChange = sc3.skip("\n").nextDouble();
         }
-        budgets.get(nameOfExpense).equals(budgets.get(nameOfExpense)-budgetChange);
-        budgets.get(nameOfIncreasedBudget).equals(budgets.get(nameOfIncreasedBudget)+budgetChange);
+        budgets.put(nameOfExpense,budgets.get(nameOfExpense)-budgetChange);
+        budgets.put(nameOfIncreasedBudget,budgets.get(nameOfIncreasedBudget)+budgetChange);
         System.out.println(budgets + "\n is the updated budget ");
     }
 public static double totalBudgetChange(Map<String, Double> budgets){
