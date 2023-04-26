@@ -92,7 +92,7 @@ public static double totalBudgetChange(Map<String, Double> budgets){
         }
         Map<String, ArrayList<Double>> percentageMap = new HashMap<>();
         //Uses the interface entry which allows you to iterate through a hasmap and use both the key and the values
-        // a for loop to sum the total value
+         a for loop to sum the total value
         for (Map.Entry<String, Double> entry : expenses.entrySet()) {
             List<Double> temporaryArray = List.of((entry.getValue() / total), entry.getValue());
             ArrayList<Double> temporaryArrayList = new ArrayList<>(temporaryArray);

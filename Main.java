@@ -5,8 +5,8 @@ public class Main {
     public static Scanner sc = new Scanner(System.in);
     public static void main(String[] args) {
 
-        System.out.println("enter initial budget");
 
+        System.out.println("enter initial budget");
         menu();
 //TODO fix bug that impedes calculation of remaining budget from total budget.
         //TODO 2 continue implementing methods for each functionality
@@ -19,7 +19,7 @@ public class Main {
         int menuOption = 0;
         menuString();
         while (menuOption != 6) {
-            while (menuOption < 1 || menuOption > 6) {
+            while (menuOption < 1 || menuOption > 7) {
                 System.out.println("invalid input, re-enter the option");
                 menuOption = sc.nextInt();
             }
@@ -30,12 +30,6 @@ public class Main {
                 System.out.println("enter object cost");
                 double cost = sc.nextDouble();
                 budget.inputExpense(name, cost);
-                //ExpenseListMixed.put(name, cost);
-                //ExpenseListpercentages.put(name, 0.0);
-                //double moneyAllocated = 0;
-                //for (Double val : ExpenseListMixed.values()) {
-                //   moneyAllocated += val;
-                //}
 
                 menuString();
                 menuOption = sc.nextInt();
@@ -58,8 +52,8 @@ public class Main {
 
             } else if (menuOption == 4) {
                 //shows current hashmap list
-               // seeCurrentBurgetAllocation(ExpenseListMixed);
-               // percentageCalculator(ExpenseListMixed);
+
+                budget.percentageCalculator();
                 menuString();
                 menuOption = sc.nextInt();
 
@@ -71,6 +65,10 @@ public class Main {
 
             } else if (menuOption == 6) {
                 break;
+            }else if(menuOption==7){
+                budget.populateDatabase(budget);
+                menuString();
+                menuOption = sc.nextInt();
             }
         }
     }
