@@ -8,8 +8,7 @@ public class Main {
 
         System.out.println("enter initial budget");
         menu();
-//TODO fix bug that impedes calculation of remaining budget from total budget.
-        //TODO 2 continue implementing methods for each functionality
+
     }
 
     public static void menu() {
@@ -35,9 +34,10 @@ public class Main {
                 menuOption = sc.nextInt();
             } else if (menuOption == 2) {
                 System.out.println("Enter the name of the budget to be changed and press INTRO ");
+                budget.seeCurrentBurgetAllocation();
                 String name = sc.next();
 
-                System.out.println("\n then enter the amount to which the new expense will be changed and press INTRO");
+                System.out.println("\n then enter the new budget for this object and press INTRO");
                 double newExpense = sc.nextDouble();
                 budget.changeExpense(name,newExpense);
 
@@ -46,7 +46,7 @@ public class Main {
 
             } else if (menuOption == 3) {
 
-               // reallocateBudget(ExpenseListMixed);
+                budget.reallocateBudget(budget);
                 menuString();
                 menuOption = sc.nextInt();
 
@@ -59,7 +59,7 @@ public class Main {
 
             } else if (menuOption == 5) {
                 //Allows to change the total budget
-             //   totalBudgetChange(ExpenseListMixed);
+                budget.changeTotalBudget();
                 menuString();
                 menuOption = sc.nextInt();
 
@@ -80,7 +80,8 @@ public class Main {
                 "\n 3. Re-allocate budget to another section " +
                 "\n 4. See the current budget allocation " +
                 "\n 5. re-set total budget " +
-                "\n 6. exit programm");
+                "\n 6. exit programm" +
+                "\n 7. Auto-fill with 3 objects for testing");
 
     }
 }
