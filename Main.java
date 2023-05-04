@@ -3,6 +3,7 @@ import java.util.Scanner;
 
 public class Main {
     public static Scanner sc = new Scanner(System.in);
+
     public static void main(String[] args) {
 
 
@@ -39,7 +40,7 @@ public class Main {
 
                 System.out.println("\n then enter the new budget for this object and press INTRO");
                 double newExpense = sc.nextDouble();
-                budget.changeExpense(name,newExpense);
+                budget.changeExpense(name, newExpense);
 
                 menuString();
                 menuOption = sc.nextInt();
@@ -65,7 +66,7 @@ public class Main {
 
             } else if (menuOption == 6) {
                 break;
-            }else if(menuOption==7){
+            } else if (menuOption == 7) {
                 budget.populateDatabase(budget);
                 menuString();
                 menuOption = sc.nextInt();
